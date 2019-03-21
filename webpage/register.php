@@ -2,6 +2,20 @@
 
 include('connection.php');
 
+$stmt = $conn->prepare("INSERT INTO users (username, email, password, fullname, dob) 
+	VALUES (?, ?, ?, ?, ?)");
+
+if ($_SERVER["REQUEST_METHOD"]=="POST") {
+	$usernmae = $_POST["username"];	
+	$email = $_POST["email"];
+	$fullname = $_POST["fullname"];
+	$pwd = $_POST["pwd"];
+	$dob = date('Y-m-d H:i:s');
+
+	$stmt->execute([$usernmae,$email,$pwd,$fullname,$dob]);
+	header('Location: index.php');
+}
+
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
